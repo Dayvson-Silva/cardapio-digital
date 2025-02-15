@@ -63,7 +63,7 @@ function addToCart(name, price) {
 // mostrar na tela o item adicionado
 function updateCartModal() {
     cartItemsContainer.innerHTML = "";
-    var total = 0;
+    let total = 0;
 
     cart.forEach(item => {
         const cartItemElement = document.createElement("div");
@@ -154,7 +154,7 @@ checkoutBtn.addEventListener("click", function() {
     // ENVIAR O PEDIDO PARA O API ZAP
     const cartItem = cart.map(item => {
         return (
-            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \n${total}\n `
+            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \n\n `
         );
     }).join("");
 
