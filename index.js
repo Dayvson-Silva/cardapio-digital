@@ -356,7 +356,7 @@ checkoutBtn.addEventListener("click", function() {
     // ENVIAR O PEDIDO PARA O API ZAP
     const cartItem = cart.map(item => {
         return (
-            ` ${item.name} Quantidade: (${item.quantity}) Preço: R$${item.price} |`
+            ` *${item.name}* <br> Quantidade: (${item.quantity}) \n Preço: R$${item.price} |`
         );
     }).join("");
 
