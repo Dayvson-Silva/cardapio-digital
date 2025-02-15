@@ -154,7 +154,7 @@ checkoutBtn.addEventListener("click", function() {
     // ENVIAR O PEDIDO PARA O API ZAP
     const cartItem = cart.map(item => {
         return (
-            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \n${total.total} \n `
+            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \n${total} \n `
         );
     }).join("");
 
