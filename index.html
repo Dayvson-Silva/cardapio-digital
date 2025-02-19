@@ -25,6 +25,7 @@
         
         
     <link rel="stylesheet" href="./css/output.css">
+    <link rel="stylesheet" href="./css/style.css">
 
     <title>DEV BURGUER</title>
 </head>
@@ -268,8 +269,33 @@
             <div id="cart-items" class="flex justify-between mb-2 flex-col"></div>
 
             <p class="font-bold">Total: <span id="cart-total">R$ 0.00</span></p>
+            
+            <div class="mt-2" id="choose">
+                <label for="delivery" class="font-bold mt-4"> Forma de Entrega</label>
+                <select id="delivery" name="delivery" class="w-full border-2 p-1 rounded my-1" >
+                    <option disabled selected value="--Selecione--">--Selecione--</option>
+                    <option value="Retirada">Retirada</option>
+                    <option value="Delivery">Delivery</option>
+                </select>
+            </div>
 
-            <p class="font-bold mt-4">Endereço de Entrega</p>
+            <div  class="mt-4" id="pagamento">
+
+                <label for="payment-method" class="font-bold mt-4">Forma de Pagamento </label>
+                <select id="payment-method" name="payment-method" class="w-full border-2 p-1 rounded my-1">
+                    <option disabled selected value="--Selecione--">--Selecione--</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Pix">Pix</option>
+                </select>
+            </div>
+
+            <div id="troco" class="display">
+                <label for="troco-input" class="font-bold mt-4">Troco</label>
+                <input type="number" id="troco-input" class="w-full border-2 p-1 rounded my-1">
+            </div>
+
+                <p class="font-bold mt-4">Endereço de Entrega</p>
             <input type="text" placeholder="Digite seu endereço completo" id="address"
                 class="w-full border-2 p-1 rounded my-1">
 
@@ -277,7 +303,7 @@
 
             <div class="flex items-center justify-between mt-5 w-full">
                 <button id="close-modal-btn">Fechar</button>
-                <button id="checkout-btn" class="bg-green-400 text-white px-4 py-1 rounded">Finalizar Pedido</button>
+                <button id="checkout-btn" class="bg-green-600 text-white px-2 py-1 rounded">Finalizar Pedido</button>
             </div>
 
         </div>

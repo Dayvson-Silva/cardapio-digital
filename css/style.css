@@ -3,5 +3,23 @@
 @tailwind utilities;
 
 body{
-    background-color: #f6f7f8;
+    background-color: #f0f0f0;
+}
+
+.display{
+    display: none;
+}
+
+.remove-btn{
+    background-color: rgb(168, 164, 158);
+    padding: 5px;
+    height: 2rem;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+.remove-btn:hover{
+    color: #f0f0f0;
+    background-color: red;
+    
+    
 }

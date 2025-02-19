@@ -11,6 +11,86 @@ const cartCounter = document.getElementById("cart-count");
 const addressInput = document.getElementById("address");
 const addressWarn = document.getElementById("address-warn");
 
+const deliveryMethod = document.getElementById("delivery");
+const paymentMethod = document.getElementById("payment-method");
+const troco = document.getElementById("troco");
+
+let valueDelivery ="";
+let valuePayment ="";
+
+deliveryMethod.addEventListener("change", function() {
+    
+    valueDelivery = this.value;
+ 
+    if (this.value) {
+        Toastify({
+            text:this.value + " selecionado com sucesso",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+        }).showToast();
+        
+    }
+    if(this.value === "Delivery" && valuePayment === "Dinheiro") {
+        
+        troco.classList.remove("display");
+        
+    } else {
+        troco.classList.add("display");
+    
+    }
+})
+
+paymentMethod.addEventListener("change", function() {
+    
+    valuePayment = this.value;
+
+    if (this.value) {
+        Toastify({
+            text:this.value + " selecionado com sucesso",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+        }).showToast();
+        
+    }
+    
+    if(this.value === "Dinheiro" && valueDelivery === "Delivery") {
+        
+        troco.classList.remove("display");
+        
+    } else {
+        troco.classList.add("display");
+    
+    }
+})
+// função para apresentar uma mensagem informando que o pix ainda nao esta disponivel
+// paymentMethod.addEventListener("change", function() {
+//     if (paymentMethod.value === "pix") {
+//         Toastify({
+//             text: "Ainda não disponivel",
+//             duration: 3000,
+//             close: true,
+//             gravity: "top",
+//             position: "center",
+//             stopOnFocus: true,
+//             style: {
+//                 background: "linear-gradient(to right, #00b09b, #96c93d)",
+//             },
+//         }).showToast();
+//     }
+//     })
+
 let cart = [];
 
 // abrir o modal do carrinho
@@ -70,7 +150,7 @@ function updateCartModal() {
         cartItemElement.classList.add("flex", "justify-between", "flex-col");
 
         cartItemElement.innerHTML = `
-        <div class="flex item-center justify-between">
+        <div class="flex item-center justify-between ">
           <div>
           <p class="font-medium">${item.name}</p>
           <p>${item.quantity}</p>
@@ -154,14 +234,15 @@ checkoutBtn.addEventListener("click", function() {
     // ENVIAR O PEDIDO PARA O API ZAP
     const cartItem = cart.map(item => {
         return (
-            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \nTotal: R$${ (item.price * item.quantity).toFixed(2)} \n\n `
+            `*${item.name}* \nQuantidade: ${item.quantity} \nPreço: R$${item.price} \nTotal: R$${ (item.price * item.quantity).toFixed(2)} 
+             \n`
         );
     }).join("");
 
     const message = encodeURIComponent(cartItem);
     const phone = "5581998366024";
 
-    window.open(`https://wa.me/${phone}?text=${message} \n Endereço: ${addressInput.value}`, "_blank");
+    window.open(`https://wa.me/${phone}?text=${message}*Forma de Pagamento:* ${dropdown.value}${encodeURIComponent('\n')}*Endereço:* ${addressInput.value}`, "_blank");
 
     cart = [];
     updateCartModal();
@@ -171,8 +252,8 @@ checkoutBtn.addEventListener("click", function() {
 function checkRestauranteOpen() {
     const data = new Date();
     const hora = data.getHours();
-    return hora >= 18 && hora < 23;
-    // true = restaurante está aberto
+    return hora >= 18 && hora <= 23;
+    
 }
 
 const spanItem = document.getElementById("date-span");
