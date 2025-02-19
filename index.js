@@ -154,7 +154,7 @@ checkoutBtn.addEventListener("click", function() {
     // ENVIAR O PEDIDO PARA O API ZAP
     const cartItem = cart.map(item => {
         return (
-            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \n\n `
+            `*${item.name}* \nQuantidade: (${item.quantity}) \nPreço: R$${item.price} \nTotal: R$${ item.price * item.quantity} \n\n `
         );
     }).join("");
 
@@ -171,7 +171,7 @@ checkoutBtn.addEventListener("click", function() {
 function checkRestauranteOpen() {
     const data = new Date();
     const hora = data.getHours();
-    return hora >= 18 && hora < 22;
+    return hora >= 18 && hora < 23;
     // true = restaurante está aberto
 }
 
