@@ -1,5 +1,3 @@
-
-
 const menu = document.getElementById("menu");
 const cartBtn = document.getElementById("cart-btn");
 const cartModal = document.getElementById("cart-modal");
@@ -14,66 +12,65 @@ const addressWarn = document.getElementById("address-warn");
 const deliveryMethod = document.getElementById("delivery");
 const paymentMethod = document.getElementById("payment-method");
 const troco = document.getElementById("troco");
+const trocoInput = document.getElementById("troco-input");
+const addressDiv = document.getElementById("address-div");
 
-let valueDelivery ="";
-let valuePayment ="";
+let valueDelivery = "";
+let valuePayment = "";
 
-deliveryMethod.addEventListener("change", function() {
-    
-    valueDelivery = this.value;
- 
-    if (this.value) {
-        Toastify({
-            text:this.value + " selecionado com sucesso",
-            duration: 3000,
-            close: true,
-            gravity: "top",
-            position: "center",
-            stopOnFocus: true,
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-        }).showToast();
-        
-    }
-    if(this.value === "Delivery" && valuePayment === "Dinheiro") {
-        
-        troco.classList.remove("display");
-        
-    } else {
-        troco.classList.add("display");
-    
-    }
-})
+deliveryMethod.addEventListener("change", function () {
+  valueDelivery = this.value;
 
-paymentMethod.addEventListener("change", function() {
-    
-    valuePayment = this.value;
+  if (this.value) {
+    Toastify({
+      text: this.value + " selecionado com sucesso",
+      duration: 3000,
+      close: true,
+      gravity: "top",
+      position: "center",
+      stopOnFocus: true,
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+    }).showToast();
+  }
+  if (this.value === "Delivery" && valuePayment === "Dinheiro") {
+    troco.classList.remove("display");
+  } else {
+    troco.classList.add("display");
+  }
 
-    if (this.value) {
-        Toastify({
-            text:this.value + " selecionado com sucesso",
-            duration: 3000,
-            close: true,
-            gravity: "top",
-            position: "center",
-            stopOnFocus: true,
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-        }).showToast();
-        
-    }
+  if (this.value === "Delivery") {
     
-    if(this.value === "Dinheiro" && valueDelivery === "Delivery") {
-        
-        troco.classList.remove("display");
-        
-    } else {
-        troco.classList.add("display");
+    addressDiv.classList.remove("hidden");
     
-    }
-})
+  }
+});
+
+paymentMethod.addEventListener("change", function () {
+  valuePayment = this.value;
+
+  if (this.value) {
+    Toastify({
+      text: this.value + " selecionado com sucesso",
+      duration: 3000,
+      close: true,
+      gravity: "top",
+      position: "center",
+      stopOnFocus: true,
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+    }).showToast();
+  }
+
+  if (this.value === "Dinheiro" && valueDelivery === "Delivery") {
+    troco.classList.remove("display");
+  } else {
+    troco.classList.add("display");
+  }
+});
+
 // função para apresentar uma mensagem informando que o pix ainda nao esta disponivel
 // paymentMethod.addEventListener("change", function() {
 //     if (paymentMethod.value === "pix") {
@@ -94,62 +91,62 @@ paymentMethod.addEventListener("change", function() {
 let cart = [];
 
 // abrir o modal do carrinho
-cartBtn.addEventListener("click", function() {
-    cartModal.style.display = "flex";
-    updateCartModal();
+cartBtn.addEventListener("click", function () {
+  cartModal.style.display = "flex";
+  updateCartModal();
 });
 
 // fechar o modal quando clicar fora
-cartModal.addEventListener("click", function(e) {
-    if (e.target === cartModal) {
-        cartModal.style.display = "none";
-    }
+cartModal.addEventListener("click", function (e) {
+  if (e.target === cartModal) {
+    cartModal.style.display = "none";
+  }
 });
 
 // ao clicar no botao fechar
-closeModalBtn.addEventListener("click", function() {
-    cartModal.style.display = "none";
+closeModalBtn.addEventListener("click", function () {
+  cartModal.style.display = "none";
 });
 
 // quando clicar no item do carrinho
-menu.addEventListener("click", function(e) {
-    let parentButton = e.target.closest(".add-to-cart-btn");
+menu.addEventListener("click", function (e) {
+  let parentButton = e.target.closest(".add-to-cart-btn");
 
-    if (parentButton) {
-        const name = parentButton.getAttribute("data-name");
-        const price = parseFloat(parentButton.getAttribute("data-price"));
-        // add no carrinho
-        addToCart(name, price);
-    }
+  if (parentButton) {
+    const name = parentButton.getAttribute("data-name");
+    const price = parseFloat(parentButton.getAttribute("data-price"));
+    // add no carrinho
+    addToCart(name, price);
+  }
 });
 
 // função para add no carrinho
 function addToCart(name, price) {
-    // verifica se vc ja add o mesmo item
-    const existingItem = cart.find(item => item.name === name);
-    // aumentando a quantidade dos itens
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            name,
-            price,
-            quantity: 1,
-        });
-    }
-    updateCartModal();
+  // verifica se vc ja add o mesmo item
+  const existingItem = cart.find((item) => item.name === name);
+  // aumentando a quantidade dos itens
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      name,
+      price,
+      quantity: 1,
+    });
+  }
+  updateCartModal();
 }
 
 // mostrar na tela o item adicionado
 function updateCartModal() {
-    cartItemsContainer.innerHTML = "";
-    let total = 0;
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
 
-    cart.forEach(item => {
-        const cartItemElement = document.createElement("div");
-        cartItemElement.classList.add("flex", "justify-between", "flex-col");
+  cart.forEach((item) => {
+    const cartItemElement = document.createElement("div");
+    cartItemElement.classList.add("flex", "justify-between", "flex-col");
 
-        cartItemElement.innerHTML = `
+    cartItemElement.innerHTML = `
         <div class="flex item-center justify-between ">
           <div>
           <p class="font-medium">${item.name}</p>
@@ -162,107 +159,127 @@ function updateCartModal() {
         </div>
         `;
 
-        total += item.price * item.quantity;
+    total += item.price * item.quantity;
 
-        cartItemsContainer.appendChild(cartItemElement);
-    });
+    cartItemsContainer.appendChild(cartItemElement);
+  });
 
-    cartTotal.textContent = total.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+  cartTotal.textContent = total.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-    cartCounter.innerHTML = cart.length;
+  cartCounter.innerHTML = cart.length;
 }
 
-cartItemsContainer.addEventListener("click", function(e) {
-    if (e.target.classList.contains("remove-btn")) {
-        const name = e.target.getAttribute("data-name");
-        removeItemCard(name);
-    }
+cartItemsContainer.addEventListener("click", function (e) {
+  if (e.target.classList.contains("remove-btn")) {
+    const name = e.target.getAttribute("data-name");
+    removeItemCard(name);
+  }
 });
 
 function removeItemCard(name) {
-    const index = cart.findIndex(item => item.name === name);
-    if (index !== -1) {
-        const item = cart[index];
+  const index = cart.findIndex((item) => item.name === name);
+  if (index !== -1) {
+    const item = cart[index];
 
-        if (item.quantity > 1) {
-            item.quantity -= 1;
-            updateCartModal();
-            return;
-        }
-        // splice remove o item da lista
-        cart.splice(index, 1);
-        updateCartModal();
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+      updateCartModal();
+      return;
     }
+    // splice remove o item da lista
+    cart.splice(index, 1);
+    updateCartModal();
+  }
 }
 
-addressInput.addEventListener("input", function(e) {
-    let inputValue = e.target.value;
+addressInput.addEventListener("input", function (e) {
+  let inputValue = e.target.value;
 
-    if (inputValue !== "") {
-        addressInput.classList.remove("border-red-600");
-        addressWarn.classList.add("hidden");
-    }
+  if (inputValue !== "") {
+    addressInput.classList.remove("border-red-600");
+    addressWarn.classList.add("hidden");
+  }
 });
 
-checkoutBtn.addEventListener("click", function() {
-    const isOpen = checkRestauranteOpen();
-    if (!isOpen) {
-        Toastify({
-            text: "Desculpe, O Restaurante está Fechado",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "left", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: "red",
-            },
-        }).showToast();
-        return;
-    }
+checkoutBtn.addEventListener("click", function () {
+  const isOpen = checkRestauranteOpen();
+  if (!isOpen) {
+    Toastify({
+      text: "Desculpe, O Restaurante está Fechado",
+      duration: 3000,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "left", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "red",
+      },
+    }).showToast();
+    return;
+  }
 
-    if (cart.length === 0) return;
-    if (addressInput.value === "") {
-        addressWarn.classList.remove("hidden");
-        addressInput.classList.add("border-red-600");
-        return;
-    }
+  if (cart.length === 0) return;
+  if (addressInput.value === "") {
+    addressWarn.classList.remove("hidden");
+    addressInput.classList.add("border-red-600");
+    return;
+  }
 
-    // ENVIAR O PEDIDO PARA O API ZAP
-    const cartItem = cart.map(item => {
-        return (
-            `*${item.name}* \nQuantidade: ${item.quantity} \nPreço: R$${item.price} \nTotal: R$${ (item.price * item.quantity).toFixed(2)} 
-             \n`
-        );
-    }).join("");
+  // ENVIAR O PEDIDO PARA O API ZAP
+  const cartItem = cart
+    .map((item) => {
+      return `*${item.name}* \nQuantidade: ${item.quantity} \nPreço: R$${
+        item.price
+      } \nTotal: R$${(item.price * item.quantity).toFixed(2)} 
+             \n*${deliveryMethod.value}*\n`;
+    })
+    .join("");
 
-    const message = encodeURIComponent(cartItem);
-    const phone = "5581998366024";
+  const message = encodeURIComponent(cartItem);
+  const phone = "5581998366024";
 
-    window.open(`https://wa.me/${phone}?text=${message}*Forma de Pagamento:* ${dropdown.value}${encodeURIComponent('\n')}*Endereço:* ${addressInput.value}`, "_blank");
+  let trocoMessage = "";
+  //   se o troco estiver visivel
+  if (troco !== troco.classList.contains("display")) {
+    trocoMessage = "*Troco: * R$ " + trocoInput.value;
+    // troco não esta visivel
+  }
+  if (troco === troco.classList.contains("display")) {
+    trocoMessage = "";
+  } else {
+    trocoMessage = "";
+  }
 
-    cart = [];
-    updateCartModal();
+  window.open(
+    `https://wa.me/${phone}?text=${message}${trocoMessage}${encodeURIComponent(
+      "\n"
+    )}*Forma de Pagamento:* ${paymentMethod.value}${encodeURIComponent(
+      "\n"
+    )}*Endereço:* ${addressInput.value}`,
+    "_blank"
+  );
+
+  cart = [];
+  updateCartModal();
 });
 
 // verificação de funcionamento do estabelecimento
 function checkRestauranteOpen() {
-    const data = new Date();
-    const hora = data.getHours();
-    return hora >= 18 && hora <= 23;
-    
+  const data = new Date();
+  const hora = data.getHours();
+  return hora >= 18 && hora <= 23;
 }
 
 const spanItem = document.getElementById("date-span");
 const isOpen = checkRestauranteOpen();
 
 if (isOpen) {
-    spanItem.classList.remove("bg-red-600");
-    spanItem.classList.add("bg-green-400");
+  spanItem.classList.remove("bg-red-600");
+  spanItem.classList.add("bg-green-400");
 } else {
-    spanItem.classList.remove("bg-green-400");
-    spanItem.classList.add("bg-red-600");
+  spanItem.classList.remove("bg-green-400");
+  spanItem.classList.add("bg-red-600");
 }
