@@ -225,7 +225,8 @@ checkoutBtn.addEventListener("click", function () {
   if (addressInput.value === "") {
     addressWarn.classList.remove("hidden");
     addressInput.classList.add("border-red-600");
-    return;
+    
+    return addressInput.value = "Estabelecimento";
   }
 
   // ENVIAR O PEDIDO PARA O API ZAP
@@ -246,13 +247,14 @@ checkoutBtn.addEventListener("click", function () {
   if (troco !== troco.classList.contains("display")) {
     trocoMessage = "*Troco: * R$ " + trocoInput.value;
     // troco não esta visivel
-  }
-  if (troco === troco.classList.contains("display")) {
-    trocoMessage = "";
   } else {
-    trocoMessage = "";
-  }
+    trocoMessage = "Não precisa de troco";
+  } 
+  // else {
+  //   trocoMessage = "";
+  // }
 
+  
   window.open(
     `https://wa.me/${phone}?text=${message}${trocoMessage}${encodeURIComponent(
       "\n"
@@ -270,7 +272,7 @@ checkoutBtn.addEventListener("click", function () {
 function checkRestauranteOpen() {
   const data = new Date();
   const hora = data.getHours();
-  return hora >= 18 && hora <= 23;
+  return (hora >= 18 && hora < 23) || (hora >= 0 && hora < 3);
 }
 
 const spanItem = document.getElementById("date-span");
