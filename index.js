@@ -6,6 +6,7 @@ const cartTotal = document.getElementById("cart-total");
 const checkoutBtn = document.getElementById("checkout-btn");
 const closeModalBtn = document.getElementById("close-modal-btn");
 const cartCounter = document.getElementById("cart-count");
+const addressDiv = document.getElementById("address-div");
 const addressInput = document.getElementById("address");
 const addressWarn = document.getElementById("address-warn");
 
@@ -13,7 +14,6 @@ const deliveryMethod = document.getElementById("delivery");
 const paymentMethod = document.getElementById("payment-method");
 const troco = document.getElementById("troco");
 const trocoInput = document.getElementById("troco-input");
-const addressDiv = document.getElementById("address-div");
 
 let valueDelivery = "";
 let valuePayment = "";
@@ -41,9 +41,10 @@ deliveryMethod.addEventListener("change", function () {
   }
 
   if (this.value === "Delivery") {
-    
     addressDiv.classList.remove("hidden");
-    
+  }
+  if (this.value === "Retirada") {
+    addressDiv.classList.add("hidden");
   }
 });
 
@@ -70,23 +71,6 @@ paymentMethod.addEventListener("change", function () {
     troco.classList.add("display");
   }
 });
-
-// função para apresentar uma mensagem informando que o pix ainda nao esta disponivel
-// paymentMethod.addEventListener("change", function() {
-//     if (paymentMethod.value === "pix") {
-//         Toastify({
-//             text: "Ainda não disponivel",
-//             duration: 3000,
-//             close: true,
-//             gravity: "top",
-//             position: "center",
-//             stopOnFocus: true,
-//             style: {
-//                 background: "linear-gradient(to right, #00b09b, #96c93d)",
-//             },
-//         }).showToast();
-//     }
-//     })
 
 let cart = [];
 
@@ -231,36 +215,38 @@ checkoutBtn.addEventListener("click", function () {
   // ENVIAR O PEDIDO PARA O API ZAP
   const cartItem = cart
     .map((item) => {
-      return `*${item.name}* \nQuantidade: ${item.quantity} \nPreço: R$${
-        item.price
-      } \nTotal: R$${(item.price * item.quantity).toFixed(2)} 
-             \n*${deliveryMethod.value}*\n`;
+      return `*${item.name}* \nQuantidade: ${item.quantity} \nPreço: R$${item.price
+        } \nTotal: R$${(item.price * item.quantity).toFixed(2)} 
+    \n`;
     })
     .join("");
 
   const message = encodeURIComponent(cartItem);
   const phone = "5581998366024";
 
+  // TROCO
   let trocoMessage = "";
-  //   se o troco estiver visivel
-  if (troco !== troco.classList.contains("display")) {
+  if (troco !== troco.classList.contains("display")) { // se o troco estiver visivel
     trocoMessage = "*Troco: * R$ " + trocoInput.value;
-    // troco não esta visivel
-  }
-  if (troco === troco.classList.contains("display")) {
-    trocoMessage = "";
+  } 
+
+  // ENDEREÇO
+  let addressValue = ``;
+  if (addressDiv !== addressDiv.classList.contains("hidden")) { // se o endereço estiver visivel
+    addressValue = `*Endereço:* ${addressInput.value}`;
   } else {
-    trocoMessage = "";
+    addressValue = "*Retirada no local*";
   }
 
-  window.open(
-    `https://wa.me/${phone}?text=${message}${trocoMessage}${encodeURIComponent(
-      "\n"
-    )}*Forma de Pagamento:* ${paymentMethod.value}${encodeURIComponent(
-      "\n"
-    )}*Endereço:* ${addressInput.value}`,
-    "_blank"
-  );
+  // ENVIAR O PEDIDO PARA O WHATSAPP
+  const wppUrl = `https://wa.me/${phone}?text=${message} 
+  // *Forma de entrega: *${deliveryMethod.value} ${encodeURIComponent("\n")}
+  // *Forma de Pagamento: *${paymentMethod.value} ${encodeURIComponent("\n")} 
+  // *Troco: *${trocoMessage} ${encodeURIComponent("\n")}
+  // *Endereço:*${addressValue}`;
+
+  // ABRIR O WHATSAPP
+  window.open(whatsappUrl, "_blank");
 
   cart = [];
   updateCartModal();
@@ -270,7 +256,8 @@ checkoutBtn.addEventListener("click", function () {
 function checkRestauranteOpen() {
   const data = new Date();
   const hora = data.getHours();
-  return hora >= 18 && hora <= 23;
+  const min = data.getMinutes();
+  return (hora >= 18 && hora <= 23) || (hora >= 0 && hora <= 3);
 }
 
 const spanItem = document.getElementById("date-span");
