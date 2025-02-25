@@ -34,6 +34,13 @@ deliveryMethod.addEventListener("change", function () {
       },
     }).showToast();
   }
+    // Se o método de entrega for "Delivery", mostramos o campo de endereço
+    if (this.value === "Delivery") {
+        addressDiv.classList.remove("hidden"); // Exibe o campo de endereço
+      } else {
+        addressDiv.classList.add("hidden"); // Esconde o campo de endereço se for "Retira"
+      }
+
   if (this.value === "Delivery" && valuePayment === "Dinheiro") {
     troco.classList.remove("display");
   } else {
@@ -70,6 +77,7 @@ paymentMethod.addEventListener("change", function () {
     troco.classList.add("display");
   }
 });
+
 
 // função para apresentar uma mensagem informando que o pix ainda nao esta disponivel
 // paymentMethod.addEventListener("change", function() {
@@ -225,7 +233,8 @@ checkoutBtn.addEventListener("click", function () {
   if (addressInput.value === "") {
     addressWarn.classList.remove("hidden");
     addressInput.classList.add("border-red-600");
-    return;
+    
+    return addressInput.value = "Estabelecimento";
   }
 
   // ENVIAR O PEDIDO PARA O API ZAP
@@ -242,23 +251,26 @@ checkoutBtn.addEventListener("click", function () {
   const phone = "5581998366024";
 
   let trocoMessage = "";
-  //   se o troco estiver visivel
-  if (troco !== troco.classList.contains("display")) {
-    trocoMessage = "*Troco: * R$ " + trocoInput.value;
-    // troco não esta visivel
-  }
-  if (troco === troco.classList.contains("display")) {
-    trocoMessage = "";
-  } else {
-    trocoMessage = "";
+
+  // Verificar se a entrega é "Delivery"
+  if (deliveryMethod.value === "Delivery") {
+    // Se troco estiver visível e o valor for preenchido, incluir o troco na mensagem
+    if (!troco.classList.contains("display") && trocoInput.value !== "") {
+      trocoMessage = "*Troco:* R$ " + trocoInput.value;
+    } else {
+      trocoMessage = "Não precisa de troco";
+    }
   }
 
+  
   window.open(
-    `https://wa.me/${phone}?text=${message}${trocoMessage}${encodeURIComponent(
+    `https://wa.me/${phone}?text=${message}${encodeURIComponent("\n")}${trocoMessage}${encodeURIComponent(
       "\n"
     )}*Forma de Pagamento:* ${paymentMethod.value}${encodeURIComponent(
       "\n"
-    )}*Endereço:* ${addressInput.value}`,
+    )} ${encodeURIComponent(
+        "\n"
+      )}*Endereço:* ${addressInput.value}`,
     "_blank"
   );
 
@@ -270,7 +282,7 @@ checkoutBtn.addEventListener("click", function () {
 function checkRestauranteOpen() {
   const data = new Date();
   const hora = data.getHours();
-  return hora >= 18 && hora <= 23;
+  return (hora >= 18 && hora < 23) || (hora >= 0 && hora < 3);
 }
 
 const spanItem = document.getElementById("date-span");
