@@ -251,6 +251,7 @@ checkoutBtn.addEventListener("click", function () {
   const phone = "5581998366024";
 
   let trocoMessage = "";
+<<<<<<< HEAD
 
   // Verificar se a entrega é "Delivery"
   if (deliveryMethod.value === "Delivery") {
@@ -261,6 +262,18 @@ checkoutBtn.addEventListener("click", function () {
       trocoMessage = "Não precisa de troco";
     }
   }
+=======
+  //   se o troco estiver visivel
+  if (troco !== troco.classList.contains("display")) {
+    trocoMessage = "*Troco: * R$ " + trocoInput.value;
+    // troco não esta visivel
+  } else {
+    trocoMessage = "Não precisa de troco";
+  } 
+  // else {
+  //   trocoMessage = "";
+  // }
+>>>>>>> 8da74df6325c3a9e8d3b1d6df86450ccf954b70d
 
   
   window.open(
