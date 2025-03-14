@@ -10,20 +10,22 @@ body{
     display: none;
 }
 
-.remove-btn{
-    background-color: rgb(168, 164, 158);
-    padding: 5px;
-    height: 2rem;
-    border-radius: 20px;
-    transition: all 0.3s ease-in-out;
-}
-.remove-btn:hover{
-    color: #f0f0f0;
-    background-color: red;
-    
-    
-}
+
 
 #cart-modal{
     overflow: auto;
+    max-height: 100vh;
+}
+
+#foods {
+    max-height: calc(100vh - 100px);
+}
+
+#cart-items {
+    max-height: 35vh;
+    overflow-y: scroll;
+    border: 1px solid #f0f0f0;
+    padding: 12px;
+
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

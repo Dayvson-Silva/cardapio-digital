@@ -131,13 +131,14 @@ function updateCartModal() {
     cartItemElement.classList.add("flex", "justify-between", "flex-col");
 
     cartItemElement.innerHTML = `
-        <div class="flex item-center justify-between ">
-          <div>
-          <p class="font-medium">${item.name}</p>
+        <div class="flex item-center justify-between border-b">
+          <div class="">
+          <p class="font-bold text-lg">${item.name}</p>
           <p>${item.quantity}</p>
           <p class="font-medium mt-2">R$ ${item.price.toFixed(2)}</p>
           </div>
-           <button class="remove-btn" data-name="${item.name}">
+           
+          <button class="remove-btn relative bg-red-600 text-white px-3 py-1 rounded" style="top: 25px;" data-name="${item.name}">
            Remover
            </button>
         </div>
@@ -226,13 +227,15 @@ checkoutBtn.addEventListener("click", function () {
 
   // TROCO
   let trocoMessage = "";
-  if (troco !== troco.classList.contains("display")) { // se o troco estiver visivel
+  if (troco !== troco.classList.contains("display")) {
+    // se o troco estiver visivel
     trocoMessage = "*Troco: * R$ " + trocoInput.value;
-  } 
+  }
 
   // ENDEREÇO
   let addressValue = ``;
-  if (addressDiv !== addressDiv.classList.contains("hidden")) { // se o endereço estiver visivel
+  if (addressDiv !== addressDiv.classList.contains("hidden")) {
+    // se o endereço estiver visivel
     addressValue = `*Endereço:* ${addressInput.value}`;
   } else {
     addressValue = "*Retirada no local*";

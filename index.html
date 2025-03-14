@@ -337,13 +337,16 @@
       class="bg-black/75 w-full h-full fixed top-0 left-0 z-[99] items-center justify-center hidden"
       id="cart-modal"
     >
-      <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
+      <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]" id="foods">
         <h2 class="text-center font-bold text-2xl mb-2">Meu Carrinho</h2>
 
+        <!-- Cart Items -->
         <div id="cart-items" class="flex justify-between mb-2 flex-col"></div>
 
+        <!-- Total -->
         <p class="font-bold">Total: <span id="cart-total">R$ 0.00</span></p>
 
+        <!-- Delivery / Retirada -->
         <div class="mt-2" id="choose">
           <label for="delivery" class="font-bold mt-4"> Forma de Entrega</label>
           <select
@@ -359,6 +362,7 @@
           </select>
         </div>
 
+        <!-- Payment -->
         <div class="mt-4" id="pagamento">
           <label for="payment-method" class="font-bold mt-4"
             >Forma de Pagamento
@@ -377,6 +381,7 @@
           </select>
         </div>
 
+        <!-- Troco -->
         <div id="troco" class="display">
           <label for="troco-input" class="font-bold mt-4">Troco</label>
           <input
@@ -386,6 +391,7 @@
           />
         </div>
 
+        <!-- Address -->
         <div id="address-div" class="hidden">
           <p class="font-bold mt-4">Endereço de Entrega</p>
           <input
