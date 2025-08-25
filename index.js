@@ -260,7 +260,7 @@ function checkRestauranteOpen() {
   const data = new Date();
   const hora = data.getHours();
   const min = data.getMinutes();
-  return (hora >= 18 && hora <= 23) || (hora >= 0 && hora <= 3);
+  return (hora >= 9 && hora <= 23) || (hora >= 0 && hora <= 3);
 }
 
 const spanItem = document.getElementById("date-span");
@@ -273,3 +273,4 @@ if (isOpen) {
   spanItem.classList.remove("bg-green-400");
   spanItem.classList.add("bg-red-600");
 }
+
